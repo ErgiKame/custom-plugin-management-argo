@@ -12,5 +12,4 @@ spec:
     command: ["sh", "-c"]
     args: ['helm template ${DEPLOY_NAME} ${REPO_NAME}/${CHART_NAME} --values ${VALUES_FILE} --version ${CHART_VERSION} --namespace ${NAMESPACE} > ${PWD}/../../../base/all.yaml && kustomize build --enable-alpha-plugins']
   discover:
-    find:
-      command: [sh, -c, find . -name values.yaml]
+    fileName: "./subdir/s*.yaml"
