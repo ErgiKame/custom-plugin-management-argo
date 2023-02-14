@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  # The name of the plugin must be unique within a given Argo CD instance.
+  name: helm-overlays
+spec:
+  version: v1.0
+  init:
+    command: ["sh", "-c"]
+    args: ['helm repo add ${REPO_NAME} ${REPO}; helm repo update']
+  generate:
+    command: ["sh", "-c"]
+    args: ['helm template ${DEPLOY_NAME} ${REPO_NAME}/${CHART_NAME} --values ${VALUES_FILE} --version ${CHART_VERSION} --namespace ${NAMESPACE} > ${PWD}/../../../base/all.yaml && kustomize build --enable-alpha-plugins']
